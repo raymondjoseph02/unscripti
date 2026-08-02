@@ -75,26 +75,18 @@ export const ChatMessageBubble = (props: {
     if (!activeChat || !messageId || isPlayingVoice) {
       return;
     }
-    console.error(activeChat, messageId);
-
     setIsPlayingVoice(true);
     try {
       const res = await getMessageSpeech(activeChat.chatroomId, messageId);
       // Speech is charged on request, so the shown balance is stale until re-read.
       refreshWallet();
       const { audio: base64Audio, format } = res.content;
-      console.error('speech response', { format, audioLength: base64Audio?.length });
       const mimeType = audioMimeTypes[format.toLowerCase()] ?? `audio/${format}`;
       audioRef.current?.pause();
       const audio = new Audio(`data:${mimeType};base64,${base64Audio}`);
-      audio.addEventListener('error', () => {
-        console.error('audio element error', audio.error);
-      });
       audioRef.current = audio;
       await audio.play();
-      console.error('audio.play() resolved', { paused: audio.paused, duration: audio.duration });
     } catch (error) {
-      console.error('playVoice failed', error);
       toast.error(error instanceof Error ? error.message : t('toast_voice_failed'));
     } finally {
       setIsPlayingVoice(false);

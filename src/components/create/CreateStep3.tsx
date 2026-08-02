@@ -75,8 +75,7 @@ export const CreateStep3 = (props: { onValidChange?: (valid: boolean) => void })
         }
       }
       setEnrichLoading(false);
-    }).catch((err: unknown) => {
-      console.error('[aiEnrich] error:', err);
+    }).catch(() => {
       toast.error(t('toast_enrich_failed'));
       setEnrichLoading(false);
     });

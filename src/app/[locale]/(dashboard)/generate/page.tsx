@@ -55,8 +55,8 @@ export default function GeneratePage() {
       if (res.success) {
         setAssets(res.content);
       }
-    } catch (error) {
-      console.error(error);
+    } catch {
+      // Keep the assets already on screen if the refetch fails.
     }
   };
 

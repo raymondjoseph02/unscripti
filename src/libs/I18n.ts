@@ -23,7 +23,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
   try {
     messages = (await import(`../locales/${locale}.json`)).default;
   } catch {
-    console.error(`[I18n] Failed to load messages for locale "${locale}", falling back to "${routing.defaultLocale}"`);
+    // A locale without a message file falls back to the default one.
     messages = (await import(`../locales/${routing.defaultLocale}.json`)).default;
   }
 

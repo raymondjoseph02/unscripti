@@ -38,8 +38,8 @@ export const VoiceModal = (props: {
             }));
           setVoices(mapped);
         }
-      } catch (error) {
-        console.error('Failed to fetch voices:', error);
+      } catch {
+        // The list stays empty when the voices cannot be fetched.
       } finally {
         setLoading(false);
       }
